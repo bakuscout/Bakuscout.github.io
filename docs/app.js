@@ -2,27 +2,53 @@ console.log("Site Loaded");
 alert("Feel free to login!");
 
 document.addEventListener("DOMContentLoaded", (event) => {
+
+    // old cookies
     const now = new Date();
-    document.cookie = `now = ${now}; SameSite=None: Secure`;
-    document.cookie = "course = WebProgramming2025; SameSite=None; Secure";
+    document.cookie = `now=${now}; SameSite=None: Secure`;
+    document.cookie = "course=WebProgramming2025; SameSite=None; Secure";
 
     document.getElementById("old-cookies").innerText = document.cookie;
 
+    // new cookies
+
     const cookieStore = window.cookieStore;
 
-    cookieStore.set({
-        name: "username",
-        value: "Eleana Thraseer"
-    }).then(() => {
+    cookieStore.set({ name: "username", value: "Eleana Thraseer"}).then(
+        () => {
         console.log("Cookie set using cookieStore");
-    }, (reason) => {
+        },
+        (reason) => {
         console.log("Unable to set cookie: " + reason);
-    });
+        }
+    );
     cookieStore.get("username").then(
         (obj) => {
             const elt = document.getElementById("new-cookies");
-            Element.innerText = `${obj.name} = ${obj.value}}`;
+            elt.innerText = `${obj.name}=${obj.value}}`;
         },
-        (reason) => {"Unable to read cookie: " + reason}
+        (reason) => {
+            console.log("Unable to read cookie: " + reason);
+        }
+    );
+
+    // Geolocation
+    let map = null;
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const markerLocation = [position.coords.latitude, position.coords.longitude];
+            map = L.map("map").setView(markerLocation, 8)
+
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+            L.marker(markerLocation).addTo(map);
+        },
+        (error) => {
+            map = null;
+            document.getElementById("map").innerText = "Unable to load map"
+            console.error("Unable to get user position" + error)
+        }
     );
 });

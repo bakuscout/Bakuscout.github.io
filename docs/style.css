@@ -1,4 +1,10 @@
 /* .nav-btn {
-    float: right;
+    margin-left: 95%;
+    margin-top: 0%;
 } */
 
+#map {
+    width: 500px;
+    height: 500px;
+    border: solid 1px black;
+}
