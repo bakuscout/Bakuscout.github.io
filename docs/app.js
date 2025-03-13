@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
             L.marker(markerLocation).addTo(map);
+            console.log("Map loaded")
         },
         (error) => {
             map = null;
@@ -51,4 +52,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
             console.error("Unable to get user position" + error)
         }
     );
+
+    //Popover
+    const popoverElement = document.getElementById("pop")
+    document.addEventListener("keydown", (event) => {
+        if(event.key === "?") {
+            popoverElement.showPopover();
+            setTimeout(() => { popoverElement.hidePopover() }, 1000)
+        }
+    });
 });
