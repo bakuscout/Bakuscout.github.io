@@ -1,10 +1,9 @@
-/* .nav-btn {
-    margin-left: 95%;
-    margin-top: 0%;
-} */
-
 #map {
     width: 400px;
     height: 400px;
     border: solid 3px grey;
+}
+
+#mypopover {
+    padding: 25px 50px;
 }
